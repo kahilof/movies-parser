@@ -1,6 +1,22 @@
 def imageName = 'mlabouardy/movies-parser'
 def registry = 'https://registry.slowcoder.com'
 
+node('aws') {
+    stage('checkout') {
+        checkout scm
+    }
+    
+    stage('Quality Tests'){
+        def imageTest= docker.build("${imageName}-test", "-f Dockerfile.test .")
+        imageTest.inside{
+            sh 'go lint'
+        }
+    }
+}
+
+
+/*
+
 node('workers'){
     stage('Checkout'){
         checkout scm
@@ -49,3 +65,5 @@ def commitID() {
     sh 'rm .git/commitID'
     commitID
 }
+
+*/
