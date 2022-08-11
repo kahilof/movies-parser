@@ -14,6 +14,10 @@ node('aws') {
         }
     }
     
+    stage('User'){
+        sh 'whoami'
+    }
+    
     stage('Unit Tests'){
         imageTest.inside{
             sh 'go test'
