@@ -6,8 +6,9 @@ node('aws') {
         checkout scm
     }
     
+    def imageTest= docker.build("${imageName}-test", "-f Dockerfile.test .")
+    
     stage('Quality Tests'){
-        def imageTest= docker.build("${imageName}-test", "-f Dockerfile.test .")
         imageTest.inside{
             sh 'golint'
         }
