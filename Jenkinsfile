@@ -12,6 +12,12 @@ node('aws') {
             sh 'golint'
         }
     }
+    
+    stage('Unit Tests'){
+        imageTest.inside{
+            sh 'go test'
+        }
+    }
 }
 
 
